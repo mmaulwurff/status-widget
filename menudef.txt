@@ -1,0 +1,13 @@
+// Entry Points ////////////////////////////////////////////////////////////////////////////////////
+
+AddOptionMenu OptionsMenu       { Submenu "$SW_OPTIONS", sw_Options }
+AddOptionMenu OptionsMenuSimple { Submenu "$SW_OPTIONS", sw_Options }
+
+// Menus ///////////////////////////////////////////////////////////////////////////////////////////
+
+OptionMenu sw_Options
+{
+  Title "$SW_OPTIONS"
+
+  Slider "$SW_SCALE", sw_scale, 0.5, 8, 0.5, 1
+}

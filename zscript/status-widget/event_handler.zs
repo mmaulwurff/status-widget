@@ -24,23 +24,7 @@ class sw_EventHandler : EventHandler
   {
     if (event.playerNumber != consolePlayer) return;
 
-    uint classesNumber = AllClasses.size();
-    for (uint i = 0; i < classesNumber; ++i)
-    {
-      class aClass = AllClasses[i];
-      if (aClass is "sw_Tracker" && aClass != "sw_Tracker")
-      {
-        let tracker = sw_Tracker(new(aClass));
-        tracker.initialize();
-        mTrackers.push(tracker);
-      }
-    }
-
-    mState = Dictionary.create();
-
-    // Initialize storage. Non-elegant way.
-    updateQueue();
-    mQueue.clear();
+    initialize();
   }
 
   override
@@ -56,7 +40,7 @@ class sw_EventHandler : EventHandler
     if (queueSize == 0) return;
 
     Array<string> lines;
-    double scale = 2.0;
+    double scale = mScale.getDouble();
 
     for (uint i = 0; i < queueSize; ++i)
     {
@@ -101,6 +85,30 @@ class sw_EventHandler : EventHandler
   }
 
 // private: ////////////////////////////////////////////////////////////////////////////////////////
+
+  private
+  void initialize()
+  {
+    uint classesNumber = AllClasses.size();
+    for (uint i = 0; i < classesNumber; ++i)
+    {
+      class aClass = AllClasses[i];
+      if (aClass is "sw_Tracker" && aClass != "sw_Tracker")
+      {
+        let tracker = sw_Tracker(new(aClass));
+        tracker.initialize();
+        mTrackers.push(tracker);
+      }
+    }
+
+    mState = Dictionary.create();
+
+    // Initialize storage. Non-elegant way.
+    updateQueue();
+    mQueue.clear();
+
+    mScale = sw_Cvar.from("sw_scale");
+  }
 
   private
   void updateQueue()
@@ -162,5 +170,7 @@ class sw_EventHandler : EventHandler
   private Array<sw_Tracker> mTrackers;
   private Dictionary mState;
   private Array<sw_Message> mQueue;
+
+  private sw_Cvar mScale;
 
 } // class sw_EventHandler
