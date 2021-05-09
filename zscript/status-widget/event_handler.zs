@@ -158,21 +158,16 @@ class sw_EventHandler : EventHandler
     }
 
     mState = Dictionary.create();
+
+    // Initialize storage. Non-elegant way.
+    updateQueue();
+    mQueue.clear();
   }
 
   override
   void worldTick()
   {
-    uint trackersNumber = mTrackers.size();
-    for (uint t = 0; t < trackersNumber; ++t)
-    {
-      let tracker = mTrackers[t];
-      sw_Messages status = tracker.getStatus(mState);
-
-      if (status != NULL) mQueue.append(status.messages);
-    }
-
-    compressQueue();
+    updateQueue();
   }
 
   override
@@ -227,6 +222,21 @@ class sw_EventHandler : EventHandler
   }
 
 // private: ////////////////////////////////////////////////////////////////////////////////////////
+
+  private
+  void updateQueue()
+  {
+    uint trackersNumber = mTrackers.size();
+    for (uint t = 0; t < trackersNumber; ++t)
+    {
+      let tracker = mTrackers[t];
+      sw_Messages status = tracker.getStatus(mState);
+
+      if (status != NULL) mQueue.append(status.messages);
+    }
+
+    compressQueue();
+  }
 
   private
   void compressQueue()
