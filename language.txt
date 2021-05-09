@@ -4,3 +4,4 @@ SW_OPTIONS = "\cg☷\c- Status Widget Options";
 SW_SCALE   = "Scale";
 SW_X       = "Horizontal position";
 SW_Y       = "Vertical position";
+SW_COLOR   = "Background color";

@@ -9,9 +9,12 @@ OptionMenu sw_Options
 {
   Title "$SW_OPTIONS"
 
-  Slider "$SW_SCALE", sw_scale, 0.5, 8, 0.5, 1
+  Slider      "$SW_SCALE", sw_scale, 0.5, 8, 0.5, 1
 
-  StaticText ""
-  Slider "$SW_X", sw_x, 0.0, 1.0, 0.01, 2
-  Slider "$SW_Y", sw_y, 0.0, 1.0, 0.01, 2
+  StaticText  ""
+  Slider      "$SW_X", sw_x, 0.0, 1.0, 0.01, 2
+  Slider      "$SW_Y", sw_y, 0.0, 1.0, 0.01, 2
+
+  StaticText  ""
+  ColorPicker "$SW_COLOR", sw_background_color
 }

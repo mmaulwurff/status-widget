@@ -82,7 +82,7 @@ class sw_EventHandler : EventHandler
     double y = min(mY.getDouble() * screenHeight, screenHeight - textHeight);
 
     double dimAlpha = longestRemainingLife > FADE_TIME ? 1.0 : double(longestRemainingLife) / FADE_TIME;
-    Screen.Dim( "000000"
+    Screen.Dim( mBackgroundColor.getString()
               , 0.5 * dimAlpha
               , int(x)
               , int(y)
@@ -133,6 +133,8 @@ class sw_EventHandler : EventHandler
     mScale = sw_Cvar.from("sw_scale");
     mX     = sw_Cvar.from("sw_x");
     mY     = sw_Cvar.from("sw_y");
+
+    mBackgroundColor = sw_Cvar.from("sw_background_color");
   }
 
   private
@@ -200,5 +202,6 @@ class sw_EventHandler : EventHandler
   private sw_Cvar mScale;
   private sw_Cvar mX;
   private sw_Cvar mY;
+  private sw_Cvar mBackgroundColor;
 
 } // class sw_EventHandler
