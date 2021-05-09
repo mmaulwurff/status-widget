@@ -1,0 +1,6 @@
+gameinfo
+{
+
+  AddEventHandlers = "sw_EventHandler"
+
+}
