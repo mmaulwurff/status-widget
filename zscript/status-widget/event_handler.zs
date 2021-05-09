@@ -148,13 +148,16 @@ class sw_EventHandler : EventHandler
   {
     if (event.playerNumber != consolePlayer) return;
 
-    mTrackers.push(new("sw_HealthTracker"));
-    mTrackers.push(new("sw_AmmoTracker"));
-
-    uint trackersNumber = mTrackers.size();
-    for (uint i = 0; i < trackersNumber; ++i)
+    uint classesNumber = AllClasses.size();
+    for (uint i = 0; i < classesNumber; ++i)
     {
-      mTrackers[i].initialize();
+      class aClass = AllClasses[i];
+      if (aClass is "sw_Tracker" && aClass != "sw_Tracker")
+      {
+        let tracker = sw_Tracker(new(aClass));
+        tracker.initialize();
+        mTrackers.push(tracker);
+      }
     }
 
     mState = Dictionary.create();
