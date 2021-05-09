@@ -1,4 +1,4 @@
-/* Copyright Alexander Kromm (mmaulwurff@gmail.com) 2020-2021
+/* Copyright Alexander Kromm (mmaulwurff@gmail.com) 2021
  *
  * This file is part of Status-Widget.
  *
@@ -208,7 +208,7 @@ class sw_EventHandler : EventHandler
     int lineHeight = int(NewSmallFont.getHeight() * scale);
     double y = 100;
     int border = 3;
-    Screen.Dim("000000", 0.5, 0, y, textWidth + border * 2, lineHeight * queueSize);
+    Screen.Dim("000000", 0.5, 0, int(y), textWidth + border * 2, lineHeight * queueSize);
 
     for (uint i = 0; i < queueSize; ++i)
     {
