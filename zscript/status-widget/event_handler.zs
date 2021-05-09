@@ -30,12 +30,16 @@ class sw_EventHandler : EventHandler
   override
   void worldTick()
   {
+    if (players[consolePlayer].mo == NULL) return;
+
     updateQueue();
   }
 
   override
   void renderOverlay(RenderEvent event)
   {
+    if (players[consolePlayer].mo == NULL) return;
+
     uint queueSize = mQueue.size();
     if (queueSize == 0) return;
 
