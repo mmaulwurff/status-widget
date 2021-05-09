@@ -45,6 +45,7 @@ class sw_EventHandler : EventHandler
 
     Array<string> lines;
     double scale = mScale.getDouble();
+    int longestRemainingLife = 0;
 
     for (uint i = 0; i < queueSize; ++i)
     {
@@ -60,6 +61,8 @@ class sw_EventHandler : EventHandler
       {
         lines.push(string.format("%s \cd+%d", item.name, item.newValue));
       }
+
+      longestRemainingLife = max(longestRemainingLife, MAX_LIFE - (level.time - mQueue[i].startTime));
     }
 
     int textWidth = 0;
@@ -77,7 +80,15 @@ class sw_EventHandler : EventHandler
     int border = 3;
     double x = min(mX.getDouble() * screenWidth, screenWidth - textWidth - border * 2);
     double y = min(mY.getDouble() * screenHeight, screenHeight - textHeight);
-    Screen.Dim("000000", 0.5, int(x), int(y), textWidth + border * 2, textHeight);
+
+    double dimAlpha = longestRemainingLife > FADE_TIME ? 1.0 : double(longestRemainingLife) / FADE_TIME;
+    Screen.Dim( "000000"
+              , 0.5 * dimAlpha
+              , int(x)
+              , int(y)
+              , textWidth + border * 2
+              , textHeight
+              );
 
     for (uint i = 0; i < queueSize; ++i)
     {
