@@ -81,13 +81,16 @@ class sw_EventHandler : EventHandler
 
     for (uint i = 0; i < queueSize; ++i)
     {
+      int remainingLife = MAX_LIFE - (level.time - mQueue[i].startTime);
+      double alpha = remainingLife > FADE_TIME ? 1.0 : double(remainingLife) / FADE_TIME;
       Screen.drawText( NewSmallFont
                      , Font.CR_White
                      , border + x
                      , y
                      , lines[i]
-                     , DTA_ScaleX, scale
-                     , DTA_ScaleY, scale
+                     , DTA_ScaleX , scale
+                     , DTA_ScaleY , scale
+                     , DTA_Alpha  , alpha
                      );
       y += lineHeight;
     }
@@ -176,7 +179,8 @@ class sw_EventHandler : EventHandler
     mQueue.move(newQueue);
   }
 
-  const MAX_LIFE = 35 * 3;
+  const MAX_LIFE  = 35 * 3;
+  const FADE_TIME = MAX_LIFE / 3;
 
   private Array<sw_Tracker> mTrackers;
   private Dictionary mState;
