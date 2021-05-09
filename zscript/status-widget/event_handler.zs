@@ -70,15 +70,20 @@ class sw_EventHandler : EventHandler
     textWidth = int((textWidth + 1) * scale);
 
     int lineHeight = int(NewSmallFont.getHeight() * scale);
-    double y = 100;
+    int textHeight = lineHeight * queueSize;
+
+    int screenWidth = Screen.getWidth();
+    int screenHeight = Screen.getHeight();
     int border = 3;
-    Screen.Dim("000000", 0.5, 0, int(y), textWidth + border * 2, lineHeight * queueSize);
+    double x = min(mX.getDouble() * screenWidth, screenWidth - textWidth - border * 2);
+    double y = min(mY.getDouble() * screenHeight, screenHeight - textHeight);
+    Screen.Dim("000000", 0.5, int(x), int(y), textWidth + border * 2, textHeight);
 
     for (uint i = 0; i < queueSize; ++i)
     {
       Screen.drawText( NewSmallFont
                      , Font.CR_White
-                     , border
+                     , border + x
                      , y
                      , lines[i]
                      , DTA_ScaleX, scale
@@ -112,6 +117,8 @@ class sw_EventHandler : EventHandler
     mQueue.clear();
 
     mScale = sw_Cvar.from("sw_scale");
+    mX     = sw_Cvar.from("sw_x");
+    mY     = sw_Cvar.from("sw_y");
   }
 
   private
@@ -176,5 +183,7 @@ class sw_EventHandler : EventHandler
   private Array<sw_Message> mQueue;
 
   private sw_Cvar mScale;
+  private sw_Cvar mX;
+  private sw_Cvar mY;
 
 } // class sw_EventHandler

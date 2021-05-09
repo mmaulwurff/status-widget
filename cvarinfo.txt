@@ -1,1 +1,3 @@
 user float sw_scale = 2;
+user float sw_x = 0;
+user float sw_y = 0;
