@@ -20,4 +20,14 @@ OptionMenu sw_Options
 
   StaticText  ""
   Slider      "$SW_LIMIT", sw_limit, 1, 20, 1, 0
+  Option      "$SW_ALIGNMENT", sw_alignment, sw_AlignmentValues
+}
+
+// Option Values ///////////////////////////////////////////////////////////////////////////////////
+
+OptionValue sw_AlignmentValues
+{
+  0, "$SW_LEFT"
+  1, "$SW_CENTER"
+  2, "$SW_RIGHT"
 }

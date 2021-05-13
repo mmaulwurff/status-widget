@@ -77,16 +77,17 @@ class sw_EventHandler : EventHandler
 
     int screenWidth = Screen.getWidth();
     int screenHeight = Screen.getHeight();
-    int border = 3;
-    double x = min(mX.getDouble() * screenWidth, screenWidth - textWidth - border * 2);
+    int alignment = mAlignment.getInt();
+    int baseX = makeBaseX(int(mX.getDouble() * screenWidth), textWidth, alignment);
+    baseX = clamp(baseX, 0, screenWidth - textWidth - BORDER * 2);
     double y = min(mY.getDouble() * screenHeight, screenHeight - textHeight);
 
     double dimAlpha = longestRemainingLife > FADE_TIME ? 1.0 : double(longestRemainingLife) / FADE_TIME;
     Screen.Dim( mBackgroundColor.getString()
               , 0.5 * dimAlpha
-              , int(x)
+              , baseX
               , int(y)
-              , textWidth + border * 2
+              , textWidth + BORDER * 2
               , textHeight
               );
 
@@ -94,9 +95,10 @@ class sw_EventHandler : EventHandler
     {
       int remainingLife = MAX_LIFE - (level.time - mQueue[i].startTime);
       double alpha = remainingLife > FADE_TIME ? 1.0 : double(remainingLife) / FADE_TIME;
+      int textX = makeTextX(baseX, lines[i], textWidth, alignment, scale);
       Screen.drawText( NewSmallFont
                      , Font.CR_White
-                     , border + x
+                     , textX
                      , y
                      , lines[i]
                      , DTA_ScaleX , scale
@@ -108,6 +110,32 @@ class sw_EventHandler : EventHandler
   }
 
 // private: ////////////////////////////////////////////////////////////////////////////////////////
+
+  private ui
+  int makeTextX(int x, string text, int maxTextWidth, int alignment, double scale)
+  {
+    switch (alignment)
+    {
+    case 0: return BORDER + x;
+    case 1: return BORDER + x + (maxTextWidth - int(NewSmallFont.stringWidth(text) * scale)) / 2;
+    case 2: return BORDER + x + (maxTextWidth - int(NewSmallFont.stringWidth(text) * scale));
+    }
+
+    return BORDER + x;
+  }
+
+  private ui
+  int makeBaseX(int x, int textWidth, int alignment)
+  {
+    switch (alignment)
+    {
+    case 0: return x;
+    case 1: return x - textWidth / 2;
+    case 2: return x - textWidth;
+    }
+
+    return x;
+  }
 
   private
   void initialize()
@@ -132,7 +160,8 @@ class sw_EventHandler : EventHandler
 
     mBackgroundColor = sw_Cvar.from("sw_background_color");
 
-    mLimit = sw_Cvar.from("sw_limit");
+    mLimit     = sw_Cvar.from("sw_limit");
+    mAlignment = sw_Cvar.from("sw_alignment");
 
     // Initialize storage. Non-elegant way.
     updateQueue();
@@ -214,6 +243,7 @@ class sw_EventHandler : EventHandler
 
   const MAX_LIFE  = 35 * 3;
   const FADE_TIME = MAX_LIFE / 3;
+  const BORDER = 3;
 
   private Array<sw_Tracker> mTrackers;
   private Dictionary mState;
@@ -224,5 +254,6 @@ class sw_EventHandler : EventHandler
   private sw_Cvar mY;
   private sw_Cvar mBackgroundColor;
   private sw_Cvar mLimit;
+  private sw_Cvar mAlignment;
 
 } // class sw_EventHandler
