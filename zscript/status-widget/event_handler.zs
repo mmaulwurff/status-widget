@@ -126,15 +126,17 @@ class sw_EventHandler : EventHandler
 
     mState = Dictionary.create();
 
-    // Initialize storage. Non-elegant way.
-    updateQueue();
-    mQueue.clear();
-
     mScale = sw_Cvar.from("sw_scale");
     mX     = sw_Cvar.from("sw_x");
     mY     = sw_Cvar.from("sw_y");
 
     mBackgroundColor = sw_Cvar.from("sw_background_color");
+
+    mLimit = sw_Cvar.from("sw_limit");
+
+    // Initialize storage. Non-elegant way.
+    updateQueue();
+    mQueue.clear();
   }
 
   private
@@ -150,6 +152,7 @@ class sw_EventHandler : EventHandler
     }
 
     compressQueue();
+    limitQueue();
   }
 
   private
@@ -192,6 +195,23 @@ class sw_EventHandler : EventHandler
     mQueue.move(newQueue);
   }
 
+  private
+  void limitQueue()
+  {
+    uint limit = mLimit.getInt();
+    uint queueSize = mQueue.size();
+    if (queueSize <= limit) return;
+
+    Array<sw_Message> newQueue;
+
+    for (uint i = queueSize - limit; i < queueSize; ++i)
+    {
+      newQueue.push(mQueue[i]);
+    }
+
+    mQueue.move(newQueue);
+  }
+
   const MAX_LIFE  = 35 * 3;
   const FADE_TIME = MAX_LIFE / 3;
 
@@ -203,5 +223,6 @@ class sw_EventHandler : EventHandler
   private sw_Cvar mX;
   private sw_Cvar mY;
   private sw_Cvar mBackgroundColor;
+  private sw_Cvar mLimit;
 
 } // class sw_EventHandler

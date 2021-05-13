@@ -3,3 +3,5 @@ user float sw_x = 0;
 user float sw_y = 0;
 
 user color sw_background_color = "00 00 00";
+
+user int sw_limit = 5;

@@ -17,4 +17,7 @@ OptionMenu sw_Options
 
   StaticText  ""
   ColorPicker "$SW_COLOR", sw_background_color
+
+  StaticText  ""
+  Slider      "$SW_LIMIT", sw_limit, 1, 20, 1, 0
 }
