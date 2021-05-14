@@ -10,3 +10,4 @@ SW_ALIGNMENT = "Alignment";
 SW_LEFT      = "Left";
 SW_CENTER    = "Center";
 SW_RIGHT     = "Right";
+SW_LIFETIME  = "Messages stay (seconds)";

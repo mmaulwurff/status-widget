@@ -47,6 +47,8 @@ class sw_EventHandler : EventHandler
     double scale = mScale.getDouble();
     int longestRemainingLife = 0;
 
+    int maxLife = 35 * mLifetime.getInt();
+
     for (uint i = 0; i < queueSize; ++i)
     {
       let item = mQueue[i];
@@ -62,7 +64,7 @@ class sw_EventHandler : EventHandler
         lines.push(string.format("%s \cd+%d", item.name, item.newValue));
       }
 
-      longestRemainingLife = max(longestRemainingLife, MAX_LIFE - (level.time - mQueue[i].startTime));
+      longestRemainingLife = max(longestRemainingLife, maxLife - (level.time - mQueue[i].startTime));
     }
 
     int textWidth = 0;
@@ -82,7 +84,8 @@ class sw_EventHandler : EventHandler
     baseX = clamp(baseX, 0, screenWidth - textWidth - BORDER * 2);
     double y = min(mY.getDouble() * screenHeight, screenHeight - textHeight);
 
-    double dimAlpha = longestRemainingLife > FADE_TIME ? 1.0 : double(longestRemainingLife) / FADE_TIME;
+    int fadeTime = maxLife / 3;
+    double dimAlpha = longestRemainingLife > fadeTime ? 1.0 : double(longestRemainingLife) / fadeTime;
     Screen.Dim( mBackgroundColor.getString()
               , 0.5 * dimAlpha
               , baseX
@@ -93,8 +96,8 @@ class sw_EventHandler : EventHandler
 
     for (uint i = 0; i < queueSize; ++i)
     {
-      int remainingLife = MAX_LIFE - (level.time - mQueue[i].startTime);
-      double alpha = remainingLife > FADE_TIME ? 1.0 : double(remainingLife) / FADE_TIME;
+      int remainingLife = maxLife - (level.time - mQueue[i].startTime);
+      double alpha = remainingLife > fadeTime ? 1.0 : double(remainingLife) / fadeTime;
       int textX = makeTextX(baseX, lines[i], textWidth, alignment, scale);
       Screen.drawText( NewSmallFont
                      , Font.CR_White
@@ -162,6 +165,7 @@ class sw_EventHandler : EventHandler
 
     mLimit     = sw_Cvar.from("sw_limit");
     mAlignment = sw_Cvar.from("sw_alignment");
+    mLifetime  = sw_Cvar.from("sw_lifetime");
 
     // Initialize storage. Non-elegant way.
     updateQueue();
@@ -194,13 +198,14 @@ class sw_EventHandler : EventHandler
 
     let firstItem = mQueue[0];
     int firstLifetime = level.time - firstItem.startTime;
-    if (firstLifetime < MAX_LIFE) newQueue.push(firstItem);
+    int maxLife = 35 * mLifetime.getInt();
+    if (firstLifetime < maxLife) newQueue.push(firstItem);
 
     for (uint i = 1; i < queueSize; ++i)
     {
       let item = mQueue[i];
       int lifetime = level.time - item.startTime;
-      if (lifetime >= MAX_LIFE) continue;
+      if (lifetime >= maxLife) continue;
 
       let previousItem = mQueue[i - 1];
 
@@ -241,8 +246,6 @@ class sw_EventHandler : EventHandler
     mQueue.move(newQueue);
   }
 
-  const MAX_LIFE  = 35 * 3;
-  const FADE_TIME = MAX_LIFE / 3;
   const BORDER = 3;
 
   private Array<sw_Tracker> mTrackers;
@@ -255,5 +258,6 @@ class sw_EventHandler : EventHandler
   private sw_Cvar mBackgroundColor;
   private sw_Cvar mLimit;
   private sw_Cvar mAlignment;
+  private sw_Cvar mLifetime;
 
 } // class sw_EventHandler
