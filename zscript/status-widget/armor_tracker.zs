@@ -25,18 +25,14 @@ class sw_ArmorTracker : sw_Tracker
   override
   sw_Messages getStatus(Dictionary savedStatus)
   {
+    let result = sw_Messages.create();
     let player = players[consolePlayer].mo;
-    int basicArmorValue   = player.countInv("BasicArmor");
-    let basicArmorMessage = watch(basicArmorValue, savedStatus, "basic_armor", "Armor");
 
-    int hexenArmorValue   = getHexenArmor(player);
-    let hexenArmorMessage = hexenArmorValue >= 0
-                          ? watch(hexenArmorValue, savedStatus, "hexen_armor", "Armor Class")
-                          : NULL;
+    int basicArmorValue = player.countInv("BasicArmor");
+    watch(basicArmorValue, savedStatus, "basic_armor", "Armor", result);
 
-    let result = new("sw_Messages");
-    if (basicArmorMessage != NULL) result.messages.push(basicArmorMessage);
-    if (hexenArmorMessage != NULL) result.messages.push(hexenArmorMessage);
+    int hexenArmorValue = getHexenArmor(player);
+    if (hexenArmorValue >= 0) watch(hexenArmorValue, savedStatus, "hexen_armor", "Armor Class", result);
 
     return result;
   }
@@ -67,22 +63,14 @@ class sw_ArmorTracker : sw_Tracker
   }
 
   private
-  sw_Message watch(int newValue, Dictionary savedStatus, string key, string name)
+  void watch(int newValue, Dictionary savedStatus, string key, string name, sw_Messages result)
   {
     int oldValue = savedStatus.at(key).toInt();
 
-    if (oldValue == newValue) return NULL;
+    if (oldValue == newValue) return;
 
-    let result = new("sw_Message");
-
-    result.name      = name;
-    result.oldValue  = oldValue;
-    result.newValue  = newValue;
-    result.startTime = level.time;
-
+    result.push(name, oldValue, newValue);
     savedStatus.insert(key, string.format("%d", newValue));
-
-    return result;
   }
 
 } // class sw_ArmorTracker

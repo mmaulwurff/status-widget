@@ -30,16 +30,10 @@ class sw_HealthTracker : sw_Tracker
 
     if (oldValue == newValue) return NULL;
 
-    let result  = new("sw_Messages");
-    let message = new("sw_Message");
-
-    message.name      = "Health";
-    message.oldValue  = oldValue;
-    message.newValue  = newValue;
-    message.startTime = level.time;
+    let result = sw_Messages.create();
+    result.push("Health", oldValue, newValue);
 
     savedStatus.insert("health", string.format("%d", newValue));
-    result.messages.push(message);
 
     return result;
   }

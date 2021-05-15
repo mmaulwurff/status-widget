@@ -25,7 +25,7 @@ class sw_InventoryTracker : sw_Tracker
   override
   sw_Messages getStatus(Dictionary savedStatus)
   {
-    let result = new("sw_Messages");
+    let result = sw_Messages.create();
 
     let player = players[consolePlayer].mo;
     for (Inventory inv = player.firstInv(); inv != NULL; inv = inv.nextInv())
@@ -36,14 +36,9 @@ class sw_InventoryTracker : sw_Tracker
 
       if (oldValue == newValue) continue;
 
-      let message = new("sw_Message");
-      message.name      = inv.getTag();
-      message.oldValue  = oldValue;
-      message.newValue  = newValue;
-      message.startTime = level.time;
+      result.push(inv.getTag(), oldValue, newValue);
 
       savedStatus.insert(className, string.format("%d", newValue));
-      result.messages.push(message);
     }
 
     return result;

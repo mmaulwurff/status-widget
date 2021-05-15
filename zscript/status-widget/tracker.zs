@@ -29,6 +29,23 @@ class sw_Message
 class sw_Messages
 {
 
+  static
+  sw_Messages create()
+  {
+    return new("sw_Messages");
+  }
+
+  void push(string name, int oldValue, int newValue)
+  {
+    let message = new("sw_Message");
+    message.name      = name;
+    message.oldValue  = oldValue;
+    message.newValue  = newValue;
+    message.startTime = level.time;
+
+    messages.push(message);
+  }
+
   Array<sw_Message> messages;
 
 } // class sw_Messages

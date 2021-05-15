@@ -36,7 +36,7 @@ class sw_AmmoTracker : sw_Tracker
   override
   sw_Messages getStatus(Dictionary savedStatus)
   {
-    let result = new("sw_Messages");
+    let result = sw_Messages.create();
 
     uint ammosNumber = mAmmos.size();
     for (uint i = 0; i < ammosNumber; ++i)
@@ -47,16 +47,10 @@ class sw_AmmoTracker : sw_Tracker
 
       if (oldValue == newValue) continue;
 
-      let message = new("sw_Message");
-
       class<Actor> ammoClass = ammo;
-      message.name      = getDefaultByType(ammoClass).getTag();
-      message.oldValue  = oldValue;
-      message.newValue  = newValue;
-      message.startTime = level.time;
+      result.push(getDefaultByType(ammoClass).getTag(), oldValue, newValue);
 
       savedStatus.insert(ammo, string.format("%d", newValue));
-      result.messages.push(message);
     }
 
     if (result.messages.size() >= 18)
