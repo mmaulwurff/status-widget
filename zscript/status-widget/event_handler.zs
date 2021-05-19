@@ -195,23 +195,23 @@ class sw_EventHandler : EventHandler
       int lifetime = level.time - item.startTime;
       if (lifetime >= maxLife) continue;
 
-      let previousItem = mQueue[i - 1];
+      uint newQueueSize = newQueue.size();
+      bool isMerged = false;
+      for (uint j = 0; j < newQueueSize; ++j)
+      {
+        let previousItem = newQueue[j];
+        int previousChange = previousItem.newValue - previousItem.oldValue;
+        int change = item.newValue - item.oldValue;
+        bool sameSign = (previousChange > 0 && change > 0) || (previousChange <= 0 && change <= 0);
+        if (previousItem.name == item.name && sameSign)
+        {
+          previousItem.startTime = item.startTime;
+          previousItem.newValue = item.newValue;
+          isMerged = true;
+        }
+      }
 
-      int previousChange = previousItem.newValue - previousItem.oldValue;
-      int change = item.newValue - item.oldValue;
-      bool sameSign = (previousChange > 0 && change > 0) || (previousChange <= 0 && change <= 0);
-      if (previousItem.name == item.name && sameSign)
-      {
-        previousItem.startTime = item.startTime;
-        previousItem.newValue = (previousItem.oldValue >= 0)
-          ? item.newValue
-          : previousItem.newValue + item.newValue
-          ;
-      }
-      else
-      {
-        newQueue.push(item);
-      }
+      if (!isMerged) newQueue.push(item);
     }
 
     mQueue.move(newQueue);
