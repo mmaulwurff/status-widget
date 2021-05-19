@@ -20,25 +20,18 @@ class sw_EventHandler : EventHandler
 {
 
   override
-  void playerEntered(PlayerEvent event)
-  {
-    if (event.playerNumber != consolePlayer) return;
-
-    initialize();
-  }
-
-  override
   void worldTick()
   {
     if (players[consolePlayer].mo == NULL) return;
 
-    updateQueue();
+    if (level.time == 1) initialize();
+    else if (level.time > 1) updateQueue();
   }
 
   override
   void renderOverlay(RenderEvent event)
   {
-    if (players[consolePlayer].mo == NULL) return;
+    if (!mIsInitialized || players[consolePlayer].mo == NULL) return;
 
     uint queueSize = mQueue.size();
     if (queueSize == 0) return;
@@ -53,16 +46,9 @@ class sw_EventHandler : EventHandler
     {
       let item = mQueue[i];
 
-      if (item.oldValue >= 0)
-      {
-        int change = item.newValue - item.oldValue;
-        string maybePlus = change > 0 ? "\cd+" : "\cg";
-        lines.push(string.format("%s %s%d\c- → %d", item.name, maybePlus, change, item.newValue));
-      }
-      else
-      {
-        lines.push(string.format("%s \cd+%d", item.name, item.newValue));
-      }
+      int change = item.newValue - item.oldValue;
+      string maybePlus = change > 0 ? "\cd+" : "\cg";
+      lines.push(string.format("%s %s%d\c- → %d", item.name, maybePlus, change, item.newValue));
 
       longestRemainingLife = max(longestRemainingLife, maxLife - (level.time - mQueue[i].startTime));
     }
@@ -170,6 +156,8 @@ class sw_EventHandler : EventHandler
     // Initialize storage. Non-elegant way.
     updateQueue();
     mQueue.clear();
+
+    mIsInitialized = true;
   }
 
   private
@@ -247,6 +235,8 @@ class sw_EventHandler : EventHandler
   }
 
   const BORDER = 3;
+
+  private bool mIsInitialized;
 
   private Array<sw_Tracker> mTrackers;
   private Dictionary mState;

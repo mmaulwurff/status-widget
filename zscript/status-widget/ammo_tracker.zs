@@ -16,20 +16,69 @@
  * Status-Widget.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+// Some code lifted from gzdoom/wadsrc/static/zscript/ui/statusbar/alt_hud.zs:
+/*
+** Enhanced heads up 'overlay' for fullscreen
+**
+**---------------------------------------------------------------------------
+** Copyright 2003-2008 Christoph Oelckers
+** All rights reserved.
+**
+** Redistribution and use in source and binary forms, with or without
+** modification, are permitted provided that the following conditions
+** are met:
+**
+** 1. Redistributions of source code must retain the above copyright
+**    notice, this list of conditions and the following disclaimer.
+** 2. Redistributions in binary form must reproduce the above copyright
+**    notice, this list of conditions and the following disclaimer in the
+**    documentation and/or other materials provided with the distribution.
+** 3. The name of the author may not be used to endorse or promote products
+**    derived from this software without specific prior written permission.
+**
+** THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+** IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+** OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+** IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+** INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+** NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+** THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+**---------------------------------------------------------------------------
+**
+*/
+
 class sw_AmmoTracker : sw_Tracker
 {
 
   override
   void initialize()
   {
-    uint classesNumber = AllActorClasses.size();
-    for (uint i = 0; i < classesNumber; ++i)
+    PlayerInfo player = players[consolePlayer];
+
+    // Order ammo by use of weapons in the weapon slots.
+    for (int k = 0; k < PlayerPawn.NUM_WEAPON_SLOTS; ++k)
     {
-      class<Ammo> aClass = (class<Ammo>)(AllActorClasses[i]);
-      if (aClass && getDefaultByType(aClass).getParentAmmo() == aClass)
+      int slotsize = player.weapons.slotSize(k);
+      for (int j = 0; j < slotsize; ++j)
       {
-        mAmmos.push(aClass.getClassName());
+        let weap = player.weapons.getWeapon(k, j);
+        if (weap == NULL) continue;
+        let weapondef = getDefaultByType(weap);
+        addAmmoFromWeapon(weapondef.ammoType1);
+        addAmmoFromWeapon(weapondef.ammoType2);
       }
+    }
+
+    // Now check for the remaining weapons that are in the inventory but not in the weapon slots.
+    for (Inventory inv = player.mo.Inv; inv; inv = inv.Inv)
+    {
+      let weap = Weapon(inv);
+      if (weap == NULL) continue;
+      addAmmoFromWeapon(weap.ammoType1);
+      addAmmoFromWeapon(weap.ammoType2);
     }
   }
 
@@ -53,24 +102,24 @@ class sw_AmmoTracker : sw_Tracker
       savedStatus.insert(ammo, string.format("%d", newValue));
     }
 
-    if (result.messages.size() >= 18)
-    {
-      result.messages.clear();
-
-      let message = new("sw_Message");
-
-      message.name      = "Ammo Package";
-      message.oldValue  = -1;
-      message.newValue  = 1;
-      message.startTime = level.time;
-
-      result.messages.push(message);
-    }
-
     return result;
   }
 
 // private: ////////////////////////////////////////////////////////////////////////////////////////
+
+  private
+  void addAmmoFromWeapon(class<Inventory> ammoType)
+  {
+    if (ammoType == NULL) return;
+
+    let ammodef = GetDefaultByType(ammoType);
+    if (ammodef == NULL || ammodef.bInvBar) return;
+
+    string ammoName = ammoType.getClassName();
+    if (mAmmos.find(ammoName) != mAmmos.size()) return;
+
+    mAmmos.push(ammoName);
+  }
 
   Array<string> mAmmos;
 
