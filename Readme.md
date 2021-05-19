@@ -9,24 +9,19 @@ This mod is a part of [m8f's toolbox](https://mmaulwurff.github.io/pages/toolbox
 
 ## Features
 
-- minimalistic UI
-- extendable - it's possible to add more message types.
-- customizable
+- minimalistic UI;
+- customizable;
+- extendable - see API.
 
 ## API
 
 Status Widget is extendable - you can track any kind of thing. To do this,
-create a class that inherits sw_Tracker and override its methods:
+create a class that inherits sw_Tracker. See `zscript/status-widget/tracker.zs`
+for API documentation and `sw_InventoryTracker` for an example.
 
-- `initialize()` is used to set up your tracker.
+## Acknowledgments
 
-- `sw_Messages getStatus(Dictionary savedStatus)` is used to create
-  messages. `savedStatus` contains last reported status: counts of things player
-  had before this moment. Trackers read and write to `savedStatus`. See
-  `sw_InventoryTracker` for an example.
-
-Messages with the same name will be squished together if they are next to each
-other.
+- Thanks to Ac!d for bug reports.
 
 ## Info
 

@@ -16,25 +16,51 @@
  * Status-Widget.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-class sw_Message
+/**
+ * Derive your class from sw_Tracker to make new Trackers.
+ */
+class sw_Tracker abstract
 {
 
-  string name;
-  int oldValue;
-  int newValue;
-  int startTime;
+  /**
+   * Sets up the tracker. This function is called only once per Tracker, before
+   * getStatus is called, typically at the level start.
+   */
+  abstract play
+  void initialize();
 
-} // class sw_Message
+  /**
+   * This function is used to check current status and create messages if
+   * needed.
+   *
+   * @param savedStatus contains last reported status: counts of things player
+   * had before this moment. Trackers read and write to `savedStatus`.
+   */
+  abstract
+  sw_Messages getStatus(Dictionary savedStatus);
+
+} // class sw_Tracker
 
 class sw_Messages
 {
 
+  /**
+   * Create sw_Messages with this function.
+   */
   static
   sw_Messages create()
   {
     return new("sw_Messages");
   }
 
+  /**
+   * Put new messages into sw_Messages with this function.
+   *
+   * @param name message name, visible in UI. Messages with the same name will
+   * be merged together.
+   * @param oldValue old value, used to calculate difference which is visible in UI.
+   * @param newValue new value, visible in UI, used to calculate difference.
+   */
   void push(string name, int oldValue, int newValue)
   {
     let message = new("sw_Message");
@@ -50,13 +76,12 @@ class sw_Messages
 
 } // class sw_Messages
 
-class sw_Tracker abstract
+class sw_Message
 {
 
-  abstract play
-  void initialize();
+  string name;
+  int oldValue;
+  int newValue;
+  int startTime;
 
-  abstract
-  sw_Messages getStatus(Dictionary savedStatus);
-
-} // class sw_Tracker
+} // class sw_Message
