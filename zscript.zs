@@ -9,3 +9,4 @@ version 4.5.0
 #include "zscript/status-widget/inventory_tracker.zs"
 
 #include "zscript/status-widget/cvar.zs"
+#include "zscript/status-widget/options.zs"

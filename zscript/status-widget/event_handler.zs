@@ -37,10 +37,10 @@ class sw_EventHandler : EventHandler
     if (queueSize == 0) return;
 
     Array<string> lines;
-    double scale = mScale.getDouble();
+    double scale = mOptions.getScale();
     int longestRemainingLife = 0;
 
-    int maxLife = 35 * mLifetime.getInt();
+    int maxLife = 35 * mOptions.getLifetime();
 
     for (uint i = 0; i < queueSize; ++i)
     {
@@ -65,14 +65,14 @@ class sw_EventHandler : EventHandler
 
     int screenWidth = Screen.getWidth();
     int screenHeight = Screen.getHeight();
-    int alignment = mAlignment.getInt();
-    int baseX = makeBaseX(int(mX.getDouble() * screenWidth), textWidth, alignment);
+    int alignment = mOptions.getAlignment();
+    int baseX = makeBaseX(int(mOptions.getX() * screenWidth), textWidth, alignment);
     baseX = clamp(baseX, 0, screenWidth - textWidth - BORDER * 2);
-    double y = min(mY.getDouble() * screenHeight, screenHeight - textHeight);
+    double y = min(mOptions.getY() * screenHeight, screenHeight - textHeight);
 
     int fadeTime = maxLife / 3;
     double dimAlpha = longestRemainingLife > fadeTime ? 1.0 : double(longestRemainingLife) / fadeTime;
-    Screen.Dim( mBackgroundColor.getString()
+    Screen.Dim( mOptions.getBackgroundColor()
               , 0.5 * dimAlpha
               , baseX
               , int(y)
@@ -142,16 +142,7 @@ class sw_EventHandler : EventHandler
     }
 
     mState = Dictionary.create();
-
-    mScale = sw_Cvar.from("sw_scale");
-    mX     = sw_Cvar.from("sw_x");
-    mY     = sw_Cvar.from("sw_y");
-
-    mBackgroundColor = sw_Cvar.from("sw_background_color");
-
-    mLimit     = sw_Cvar.from("sw_limit");
-    mAlignment = sw_Cvar.from("sw_alignment");
-    mLifetime  = sw_Cvar.from("sw_lifetime");
+    mOptions = sw_Options.from();
 
     // Initialize storage. Non-elegant way.
     updateQueue();
@@ -186,7 +177,7 @@ class sw_EventHandler : EventHandler
 
     let firstItem = mQueue[0];
     int firstLifetime = level.time - firstItem.startTime;
-    int maxLife = 35 * mLifetime.getInt();
+    int maxLife = 35 * mOptions.getLifetime();
     if (firstLifetime < maxLife) newQueue.push(firstItem);
 
     for (uint i = 1; i < queueSize; ++i)
@@ -220,7 +211,7 @@ class sw_EventHandler : EventHandler
   private
   void limitQueue()
   {
-    uint limit = mLimit.getInt();
+    uint limit = mOptions.getLimit();
     uint queueSize = mQueue.size();
     if (queueSize <= limit) return;
 
@@ -241,13 +232,6 @@ class sw_EventHandler : EventHandler
   private Array<sw_Tracker> mTrackers;
   private Dictionary mState;
   private Array<sw_Message> mQueue;
-
-  private sw_Cvar mScale;
-  private sw_Cvar mX;
-  private sw_Cvar mY;
-  private sw_Cvar mBackgroundColor;
-  private sw_Cvar mLimit;
-  private sw_Cvar mAlignment;
-  private sw_Cvar mLifetime;
+  private sw_Options mOptions;
 
 } // class sw_EventHandler
