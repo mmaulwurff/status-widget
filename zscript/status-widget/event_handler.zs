@@ -73,7 +73,7 @@ class sw_EventHandler : EventHandler
     int fadeTime = maxLife / 3;
     double dimAlpha = longestRemainingLife > fadeTime ? 1.0 : double(longestRemainingLife) / fadeTime;
     Screen.Dim( mOptions.getBackgroundColor()
-              , 0.5 * dimAlpha
+              , 0.5 * dimAlpha * mOptions.getOpacity()
               , baseX
               , int(y)
               , textWidth + BORDER * 2
@@ -92,7 +92,7 @@ class sw_EventHandler : EventHandler
                      , lines[i]
                      , DTA_ScaleX , scale
                      , DTA_ScaleY , scale
-                     , DTA_Alpha  , alpha
+                     , DTA_Alpha  , alpha * mOptions.getOpacity()
                      );
       y += lineHeight;
     }

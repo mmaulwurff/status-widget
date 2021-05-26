@@ -10,13 +10,14 @@ OptionMenu sw_Options
   Title "$SW_OPTIONS"
 
   StaticText  ""
-  Slider      "$SW_SCALE", sw_scale, 0.5, 8, 0.5, 1
-  ColorPicker "$SW_COLOR", sw_background_color
+  Slider      "$SW_SCALE"   , sw_scale   , 0.5,   8, 0.5, 1
+  Slider      "$SW_OPACITY" , sw_opacity , 0.1, 1.0, 0.1, 1
+  ColorPicker "$SW_COLOR"   , sw_background_color
 
   StaticText  ""
-  Slider      "$SW_X", sw_x, 0.0, 1.0, 0.01, 2
-  Slider      "$SW_Y", sw_y, 0.0, 1.0, 0.01, 2
-  Option      "$SW_ALIGNMENT", sw_alignment, sw_AlignmentValues
+  Slider      "$SW_X", sw_x   , 0.0, 1.0, 0.01, 2
+  Slider      "$SW_Y", sw_y   , 0.0, 1.0, 0.01, 2
+  Option      "$SW_ALIGNMENT" , sw_alignment, sw_AlignmentValues
 
   StaticText  ""
   Slider      "$SW_LIMIT"    , sw_limit    , 1, 20, 1, 0

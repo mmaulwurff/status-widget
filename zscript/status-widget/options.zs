@@ -30,6 +30,7 @@ class sw_Options
   double getScale() const { return mScale.getDouble(); }
   double getX() const { return mX.getDouble(); }
   double getY() const { return mY.getDouble(); }
+  double getOpacity() const { return mOpacity.getDouble(); }
 
   string getBackgroundColor() const { return mBackgroundColor.getString(); }
 
@@ -42,9 +43,10 @@ class sw_Options
   private
   void init()
   {
-    mScale = load("sw_scale");
-    mX     = load("sw_x");
-    mY     = load("sw_y");
+    mScale   = load("sw_scale");
+    mX       = load("sw_x");
+    mY       = load("sw_y");
+    mOpacity = load("sw_opacity");
 
     mBackgroundColor = load("sw_background_color");
 
@@ -62,6 +64,7 @@ class sw_Options
   private sw_Cvar mScale;
   private sw_Cvar mX;
   private sw_Cvar mY;
+  private sw_Cvar mOpacity;
 
   private sw_Cvar mBackgroundColor;
 
