@@ -20,11 +20,16 @@ class sw_InventoryTracker : sw_Tracker
 {
 
   override
-  void initialize() {}
+  void initialize()
+  {
+    mIsEnabled = sw_Cvar.from("sw_enable_inventory");
+  }
 
   override
   sw_Messages getStatus(Dictionary savedStatus)
   {
+    if (!mIsEnabled.getBool()) return NULL;
+
     let result = sw_Messages.create();
 
     let player = players[consolePlayer].mo;
@@ -43,5 +48,9 @@ class sw_InventoryTracker : sw_Tracker
 
     return result;
   }
+
+// private: ////////////////////////////////////////////////////////////////////////////////////////
+
+  private sw_Cvar mIsEnabled;
 
 } // class sw_InventoryTracker

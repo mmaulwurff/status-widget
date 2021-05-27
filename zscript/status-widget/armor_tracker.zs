@@ -20,11 +20,16 @@ class sw_ArmorTracker : sw_Tracker
 {
 
   override
-  void initialize() {}
+  void initialize()
+  {
+    mIsEnabled = sw_Cvar.from("sw_enable_armor");
+  }
 
   override
   sw_Messages getStatus(Dictionary savedStatus)
   {
+    if (!mIsEnabled.getBool()) return NULL;
+
     let result = sw_Messages.create();
     let player = players[consolePlayer].mo;
 
@@ -72,5 +77,7 @@ class sw_ArmorTracker : sw_Tracker
     result.push(name, oldValue, newValue);
     savedStatus.insert(key, string.format("%d", newValue));
   }
+
+  private sw_Cvar mIsEnabled;
 
 } // class sw_ArmorTracker

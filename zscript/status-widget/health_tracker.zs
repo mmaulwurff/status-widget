@@ -20,11 +20,16 @@ class sw_HealthTracker : sw_Tracker
 {
 
   override
-  void initialize() {}
+  void initialize()
+  {
+    mIsEnabled = sw_Cvar.from("sw_enable_health");
+  }
 
   override
   sw_Messages getStatus(Dictionary savedStatus)
   {
+    if (!mIsEnabled.getBool()) return NULL;
+
     int oldValue = savedStatus.at("health").toInt();
     int newValue = players[consolePlayer].health;
 
@@ -37,5 +42,9 @@ class sw_HealthTracker : sw_Tracker
 
     return result;
   }
+
+// private: ////////////////////////////////////////////////////////////////////////////////////////
+
+  private sw_Cvar mIsEnabled;
 
 } // class sw_HealthTracker

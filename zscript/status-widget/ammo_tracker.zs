@@ -80,11 +80,15 @@ class sw_AmmoTracker : sw_Tracker
       addAmmoFromWeapon(weap.ammoType1);
       addAmmoFromWeapon(weap.ammoType2);
     }
+
+    mIsEnabled = sw_Cvar.from("sw_enable_ammo");
   }
 
   override
   sw_Messages getStatus(Dictionary savedStatus)
   {
+    if (!mIsEnabled.getBool()) return NULL;
+
     let result = sw_Messages.create();
 
     uint ammosNumber = mAmmos.size();
@@ -121,6 +125,7 @@ class sw_AmmoTracker : sw_Tracker
     mAmmos.push(ammoName);
   }
 
-  Array<string> mAmmos;
+  private Array<string> mAmmos;
+  private sw_Cvar       mIsEnabled;
 
 } // class sw_AmmoTracker

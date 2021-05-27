@@ -12,3 +12,9 @@ SW_LEFT      = "Left";
 SW_CENTER    = "Center";
 SW_RIGHT     = "Right";
 SW_LIFETIME  = "Messages stay (seconds)";
+
+SW_MESSAGES         = "Messages";
+SW_ENABLE_HEALTH    = "Health";
+SW_ENABLE_AMMO      = "Ammo";
+SW_ENABLE_INVENTORY = "Inventory";
+SW_ENABLE_ARMOR     = "Armor";

@@ -8,3 +8,8 @@ user color sw_background_color = "00 00 00";
 user int sw_limit = 5;
 user int sw_alignment = 0;
 user int sw_lifetime = 3;
+
+user bool sw_enable_health    = true;
+user bool sw_enable_ammo      = true;
+user bool sw_enable_inventory = true;
+user bool sw_enable_armor     = true;
