@@ -13,3 +13,4 @@ user bool sw_enable_health    = true;
 user bool sw_enable_ammo      = true;
 user bool sw_enable_inventory = true;
 user bool sw_enable_armor     = true;
+user bool sw_enable_weapons   = true;

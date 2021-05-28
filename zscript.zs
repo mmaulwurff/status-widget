@@ -7,6 +7,7 @@ version 4.5.0
 #include "zscript/status-widget/ammo_tracker.zs"
 #include "zscript/status-widget/armor_tracker.zs"
 #include "zscript/status-widget/inventory_tracker.zs"
+#include "zscript/status-widget/weapon_tracker.zs"
 
 #include "zscript/status-widget/cvar.zs"
 #include "zscript/status-widget/options.zs"

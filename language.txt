@@ -1,16 +1,20 @@
 [enu default]
 
 SW_OPTIONS   = "\cg☷\c- Status Widget Options";
+
 SW_SCALE     = "Scale";
 SW_OPACITY   = "Opacity";
 SW_X         = "Horizontal position";
 SW_Y         = "Vertical position";
+
 SW_COLOR     = "Background color";
 SW_LIMIT     = "Limit";
+
 SW_ALIGNMENT = "Alignment";
 SW_LEFT      = "Left";
 SW_CENTER    = "Center";
 SW_RIGHT     = "Right";
+
 SW_LIFETIME  = "Messages stay (seconds)";
 
 SW_MESSAGES         = "Messages";
@@ -18,3 +22,4 @@ SW_ENABLE_HEALTH    = "Health";
 SW_ENABLE_AMMO      = "Ammo";
 SW_ENABLE_INVENTORY = "Inventory";
 SW_ENABLE_ARMOR     = "Armor";
+SW_ENABLE_WEAPONS   = "Weapons";

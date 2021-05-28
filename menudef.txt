@@ -29,6 +29,7 @@ OptionMenu sw_Options
   Option      "$SW_ENABLE_AMMO"      , sw_enable_ammo      , OnOff
   Option      "$SW_ENABLE_INVENTORY" , sw_enable_inventory , OnOff
   Option      "$SW_ENABLE_ARMOR"     , sw_enable_armor     , OnOff
+  Option      "$SW_ENABLE_WEAPONS"   , sw_enable_weapons   , OnOff
 }
 
 // Option Values ///////////////////////////////////////////////////////////////////////////////////
