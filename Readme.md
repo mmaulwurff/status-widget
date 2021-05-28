@@ -1,7 +1,7 @@
 # Status Widget
 
 Status Widget is an add-on for GZDoom. It displays changes of health, armor,
-ammo and inventory items.
+ammo, and more.
 
 ![Screenshot](screenshots/armor-health.png)
 
@@ -22,6 +22,7 @@ for API documentation and `sw_InventoryTracker` for an example.
 ## Acknowledgments
 
 - Thanks to Ac!d for bug reports.
+- Thanks to namsan for feature suggestions.
 
 ## Info
 
