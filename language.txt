@@ -24,3 +24,7 @@ SW_ENABLE_INVENTORY = "Inventory";
 SW_ENABLE_ARMOR     = "Armor";
 SW_ENABLE_WEAPONS   = "Weapons";
 SW_ENABLE_KEYS      = "Keys";
+
+SW_ARMOR       = "Armor";
+SW_ARMOR_CLASS = "Armor Class";
+SW_HEALTH      = "Health";

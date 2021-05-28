@@ -34,10 +34,18 @@ class sw_ArmorTracker : sw_Tracker
     let player = players[consolePlayer].mo;
 
     int basicArmorValue = player.countInv("BasicArmor");
-    watch(basicArmorValue, savedStatus, "basic_armor", "Armor", result);
+    watch(basicArmorValue, savedStatus, "basic_armor", StringTable.localize("$SW_ARMOR"), result);
 
     int hexenArmorValue = getHexenArmor(player);
-    if (hexenArmorValue >= 0) watch(hexenArmorValue, savedStatus, "hexen_armor", "Armor Class", result);
+    if (hexenArmorValue >= 0)
+    {
+      watch( hexenArmorValue
+           , savedStatus
+           , "hexen_armor"
+           , StringTable.localize("$SW_ARMOR_CLASS")
+           , result
+           );
+    }
 
     return result;
   }
