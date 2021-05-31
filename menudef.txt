@@ -31,6 +31,7 @@ OptionMenu sw_Options
   Option      "$SW_ENABLE_ARMOR"     , sw_enable_armor     , OnOff
   Option      "$SW_ENABLE_WEAPONS"   , sw_enable_weapons   , OnOff
   Option      "$SW_ENABLE_KEYS"      , sw_enable_keys      , OnOff
+  Option      "$SW_ENABLE_OXYGEN"    , sw_enable_oxygen    , OnOff
 }
 
 // Option Values ///////////////////////////////////////////////////////////////////////////////////
