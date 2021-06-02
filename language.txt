@@ -25,6 +25,7 @@ SW_ENABLE_ARMOR     = "Armor";
 SW_ENABLE_WEAPONS   = "Weapons";
 SW_ENABLE_KEYS      = "Keys";
 SW_ENABLE_OXYGEN    = "Oxygen";
+SW_ENABLE_POWERUPS  = "Powerups";
 
 SW_ARMOR       = "Armor";
 SW_ARMOR_CLASS = "Armor Class";

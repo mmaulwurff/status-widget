@@ -16,4 +16,5 @@ user bool sw_enable_armor     = true;
 user bool sw_enable_weapons   = true;
 user bool sw_enable_keys      = true;
 
-user bool sw_enable_oxygen = false;
+user bool sw_enable_oxygen    = false;
+user bool sw_enable_powerups  = false;

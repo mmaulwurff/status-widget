@@ -10,6 +10,7 @@ version 4.5.0
 #include "zscript/status-widget/weapon_tracker.zs"
 #include "zscript/status-widget/key_tracker.zs"
 #include "zscript/status-widget/oxygen_tracker.zs"
+#include "zscript/status-widget/powerup_tracker.zs"
 
 #include "zscript/status-widget/cvar.zs"
 #include "zscript/status-widget/options.zs"

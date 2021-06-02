@@ -12,7 +12,7 @@ This mod is a part of [m8f's toolbox](https://mmaulwurff.github.io/pages/toolbox
 - minimalistic UI;
 - customizable;
 - lots of things to track - health, ammo, inventory items, armor, weapons, keys,
-  oxygen.
+  oxygen, powerups.
 - extendable - see API.
 
 ## API
