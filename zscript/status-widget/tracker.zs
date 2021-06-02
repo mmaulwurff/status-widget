@@ -60,13 +60,16 @@ class sw_Messages
    * be merged together.
    * @param oldValue old value, used to calculate difference which is visible in UI.
    * @param newValue new value, visible in UI, used to calculate difference.
+   * @param maxValue max value, optional. If new value is equal or greater than max,
+   * it's color is changed.
    */
-  void push(string name, int oldValue, int newValue)
+  void push(string name, int oldValue, int newValue, int maxValue = -1)
   {
     let message = new("sw_Message");
     message.name      = name;
     message.oldValue  = oldValue;
     message.newValue  = newValue;
+    message.maxValue  = maxValue;
     message.startTime = level.time;
 
     messages.push(message);
@@ -82,6 +85,7 @@ class sw_Message
   string name;
   int oldValue;
   int newValue;
+  int maxValue;
   int startTime;
 
 } // class sw_Message

@@ -48,7 +48,7 @@ class sw_EventHandler : EventHandler
 
       int change = item.newValue - item.oldValue;
       string maybePlus = change > 0 ? "\cd+" : "\cg";
-      lines.push(string.format("%s %s%d\c- → %d", item.name, maybePlus, change, item.newValue));
+      lines.push(string.format("\cj%s %s%d\cj → \c-%d", item.name, maybePlus, change, item.newValue));
 
       longestRemainingLife = max(longestRemainingLife, maxLife - (level.time - mQueue[i].startTime));
     }
@@ -85,8 +85,10 @@ class sw_EventHandler : EventHandler
       int remainingLife = maxLife - (level.time - mQueue[i].startTime);
       double alpha = remainingLife > fadeTime ? 1.0 : double(remainingLife) / fadeTime;
       int textX = makeTextX(baseX, lines[i], textWidth, alignment, scale);
+      int max = mQueue[i].maxValue;
+      int fontColor = (max > 0 && mQueue[i].newValue >= max) ? Font.CR_Cyan : Font.CR_White;
       Screen.drawText( NewSmallFont
-                     , Font.CR_White
+                     , fontColor
                      , textX
                      , y
                      , lines[i]
@@ -197,7 +199,8 @@ class sw_EventHandler : EventHandler
         if (previousItem.name == item.name && sameSign)
         {
           previousItem.startTime = item.startTime;
-          previousItem.newValue = item.newValue;
+          previousItem.newValue  = item.newValue;
+          previousItem.maxValue  = item.maxValue;
           isMerged = true;
         }
       }

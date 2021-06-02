@@ -41,7 +41,7 @@ class sw_InventoryTracker : sw_Tracker
 
       if (oldValue == newValue) continue;
 
-      result.push(inv.getTag(), oldValue, newValue);
+      result.push(inv.getTag(), oldValue, newValue, inv.maxAmount);
 
       savedStatus.insert(className, string.format("%d", newValue));
     }

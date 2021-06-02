@@ -92,16 +92,21 @@ class sw_AmmoTracker : sw_Tracker
     let result = sw_Messages.create();
 
     uint ammosNumber = mAmmos.size();
+    let player = players[consolePlayer].mo;
     for (uint i = 0; i < ammosNumber; ++i)
     {
       string ammo = mAmmos[i];
       int oldValue = savedStatus.at(ammo).toInt();
-      int newValue = players[consolePlayer].mo.countInv(ammo);
+      let inv      = Inventory(player.findInventory(ammo));
+
+      if (inv == NULL) continue;
+
+      int newValue = inv.amount;
 
       if (oldValue == newValue) continue;
 
       class<Actor> ammoClass = ammo;
-      result.push(getDefaultByType(ammoClass).getTag(), oldValue, newValue);
+      result.push(getDefaultByType(ammoClass).getTag(), oldValue, newValue, inv.maxAmount);
 
       savedStatus.insert(ammo, string.format("%d", newValue));
     }
