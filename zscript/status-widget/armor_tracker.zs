@@ -30,21 +30,36 @@ class sw_ArmorTracker : sw_Tracker
   {
     if (!mIsEnabled.getBool()) return NULL;
 
-    let result = sw_Messages.create();
+    sw_Messages result = NULL;
     let player = players[consolePlayer].mo;
 
-    int basicArmorValue = player.countInv("BasicArmor");
-    watch(basicArmorValue, savedStatus, "basic_armor", StringTable.localize("$SW_ARMOR"), result);
-
-    int hexenArmorValue = getHexenArmor(player);
-    if (hexenArmorValue >= 0)
+    // Basic Armor
     {
-      watch( hexenArmorValue
-           , savedStatus
-           , "hexen_armor"
-           , StringTable.localize("$SW_ARMOR_CLASS")
-           , result
-           );
+      int newValue = player.countInv("BasicArmor");
+      int oldValue = savedStatus.at(BASIC_ARMOR_KEY).toInt();
+      if (oldValue != newValue)
+      {
+        string name = StringTable.localize("$SW_ARMOR");
+        if (result == NULL) result = sw_Messages.create();
+        result.push(name, oldValue, newValue);
+        savedStatus.insert(BASIC_ARMOR_KEY, string.format("%d", newValue));
+      }
+    }
+
+    // Hexen Armor
+    {
+      int newValue = getHexenArmor(player);
+      if (newValue >= 0)
+      {
+        int oldValue = savedStatus.at(HEXEN_ARMOR_KEY).toInt();
+        if (oldValue != newValue)
+        {
+          string name = StringTable.localize("$SW_ARMOR_CLASS");
+          if (result == NULL) result = sw_Messages.create();
+          result.push(name, oldValue, newValue);
+          savedStatus.insert(HEXEN_ARMOR_KEY, string.format("%d", newValue));
+        }
+      }
     }
 
     return result;
@@ -52,7 +67,10 @@ class sw_ArmorTracker : sw_Tracker
 
 // private: ////////////////////////////////////////////////////////////////////////////////////////
 
-  // Taken from StatusBar.getArmorSavePercent().
+  const BASIC_ARMOR_KEY = "basic_armor";
+  const HEXEN_ARMOR_KEY = "hexen_armor";
+
+  /// Taken from StatusBar.getArmorSavePercent().
   private static
   int getHexenArmor(PlayerPawn player)
   {
@@ -73,17 +91,6 @@ class sw_ArmorTracker : sw_Tracker
     }
 
     return int(add) / 5;
-  }
-
-  private
-  void watch(int newValue, Dictionary savedStatus, string key, string name, sw_Messages result)
-  {
-    int oldValue = savedStatus.at(key).toInt();
-
-    if (oldValue == newValue) return;
-
-    result.push(name, oldValue, newValue);
-    savedStatus.insert(key, string.format("%d", newValue));
   }
 
   private sw_Cvar mIsEnabled;

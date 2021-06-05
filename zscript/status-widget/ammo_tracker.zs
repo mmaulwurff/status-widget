@@ -89,7 +89,7 @@ class sw_AmmoTracker : sw_Tracker
   {
     if (!mIsEnabled.getBool()) return NULL;
 
-    let result = sw_Messages.create();
+    sw_Messages result = NULL;
 
     uint ammosNumber = mAmmos.size();
     let player = players[consolePlayer].mo;
@@ -106,6 +106,7 @@ class sw_AmmoTracker : sw_Tracker
       if (oldValue == newValue) continue;
 
       class<Actor> ammoClass = ammo;
+      if (result == NULL) result = sw_Messages.create();
       result.push(getDefaultByType(ammoClass).getTag(), oldValue, newValue, inv.maxAmount);
 
       savedStatus.insert(ammo, string.format("%d", newValue));

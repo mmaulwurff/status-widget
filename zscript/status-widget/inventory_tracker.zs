@@ -30,7 +30,7 @@ class sw_InventoryTracker : sw_Tracker
   {
     if (!mIsEnabled.getBool()) return NULL;
 
-    let result = sw_Messages.create();
+    sw_Messages result = NULL;
 
     let player = players[consolePlayer].mo;
     for (Inventory inv = player.firstInv(); inv != NULL; inv = inv.nextInv())
@@ -41,6 +41,7 @@ class sw_InventoryTracker : sw_Tracker
 
       if (oldValue == newValue) continue;
 
+      if (result == NULL) result = sw_Messages.create();
       result.push(inv.getTag(), oldValue, newValue, inv.maxAmount);
 
       savedStatus.insert(className, string.format("%d", newValue));

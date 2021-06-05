@@ -30,7 +30,7 @@ class sw_KeyTracker : sw_Tracker
   {
     if (!mIsEnabled.getBool()) return NULL;
 
-    let result = sw_Messages.create();
+    sw_Messages result = NULL;
 
     for (Inventory inv = players[consolePlayer].mo.Inv; inv; inv = inv.Inv)
     {
@@ -42,6 +42,7 @@ class sw_KeyTracker : sw_Tracker
 
       if (oldValue == newValue) continue;
 
+      if (result == NULL) result = sw_Messages.create();
       result.push(inv.getTag(), oldValue, newValue);
       savedStatus.insert(className, string.format("%d", newValue));
     }

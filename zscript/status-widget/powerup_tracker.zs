@@ -30,7 +30,7 @@ class sw_PowerupTracker : sw_Tracker
   {
     if (!mIsEnabled.getBool()) return NULL;
 
-    let result = sw_Messages.create();
+    sw_Messages result = NULL;
 
     PlayerPawn player = players[consolePlayer].mo;
     for (Inventory inv = player.Inv; inv; inv = inv.Inv)
@@ -49,6 +49,7 @@ class sw_PowerupTracker : sw_Tracker
       if (newValue > oldValue && newValue > Powerup(inv.default).effectTics) continue;
 
       string name = (inv.getTag(".") == ".") ? makePowerupName(className) : inv.getTag();
+      if (result == NULL) result = sw_Messages.create();
       result.push(name, oldValue, newValue);
       savedStatus.insert(className, string.format("%d", newValue));
     }
