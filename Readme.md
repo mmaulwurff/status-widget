@@ -13,6 +13,7 @@ This mod is a part of [m8f's toolbox](https://mmaulwurff.github.io/pages/toolbox
 - customizable;
 - lots of things to track - health, ammo, inventory items, armor, weapons, keys,
   oxygen, powerups.
+- max value highlighting for ammo, inventory items and health.
 - extendable - see API.
 
 ## API
@@ -26,6 +27,7 @@ for API documentation and `sw_InventoryTracker` for an example.
 - Thanks to Ac!d for bug reports.
 - Thanks to namsan for feature suggestions.
 - Thanks to Spaceman333 for feature suggestions.
+- Thanks to mamaluigisbagel for feature suggestions.
 
 ## Known Issues
 

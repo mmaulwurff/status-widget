@@ -36,7 +36,8 @@ class sw_HealthTracker : sw_Tracker
     if (oldValue == newValue) return NULL;
 
     let result = sw_Messages.create();
-    result.push(StringTable.localize("$SW_HEALTH"), oldValue, newValue);
+    int maxValue = players[consolePlayer].mo.getMaxHealth();
+    result.push(StringTable.localize("$SW_HEALTH"), oldValue, newValue, maxValue);
 
     savedStatus.insert("health", string.format("%d", newValue));
 
