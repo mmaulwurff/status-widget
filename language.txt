@@ -1,6 +1,6 @@
 [enu default]
 
-SW_OPTIONS   = "\cg☷\c- Status Widget Options";
+SW_OPTIONS   = "\cg±\c- Status Widget Options";
 
 SW_SCALE     = "Scale";
 SW_OPACITY   = "Opacity";
