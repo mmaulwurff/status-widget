@@ -40,8 +40,10 @@ class sw_ArmorTracker : sw_Tracker
       if (oldValue != newValue)
       {
         string name = StringTable.localize("$SW_ARMOR");
+        let arm = player.findInventory("BasicArmor");
+        int maxValue = arm ? arm.maxAmount : -1;
         if (result == NULL) result = sw_Messages.create();
-        result.push(name, oldValue, newValue);
+        result.push(name, oldValue, newValue, maxValue);
         savedStatus.insert(BASIC_ARMOR_KEY, string.format("%d", newValue));
       }
     }
