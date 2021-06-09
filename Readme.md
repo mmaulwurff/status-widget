@@ -27,7 +27,7 @@ for API documentation and `sw_InventoryTracker` for an example.
 - Thanks to Ac!d for bug reports.
 - Thanks to namsan for feature suggestions.
 - Thanks to Spaceman333 for feature suggestions.
-- Thanks to mamaluigisbagel for feature suggestions.
+- Thanks to mamaluigisbagel for feature suggestions and bug reports.
 
 ## Known Issues
 

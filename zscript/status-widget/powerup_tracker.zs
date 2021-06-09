@@ -43,6 +43,7 @@ class sw_PowerupTracker : sw_Tracker
       let power    = Powerup(inv);
       int newValue = int(ceil((power.effectTics + 1) / 35.0)); // we are 1 tic late, compensate.
 
+      if (newValue > TOO_LONG) continue;
       if (oldValue == newValue) continue;
 
       // Skip powerups with growing effect tics like berserk.
@@ -58,6 +59,9 @@ class sw_PowerupTracker : sw_Tracker
   }
 
 // private: ////////////////////////////////////////////////////////////////////////////////////////
+
+  const SECONDS_IN_FIVE_MINUTES = 5 * 60;
+  const TOO_LONG = SECONDS_IN_FIVE_MINUTES;
 
   private
   string makePowerupName(string className)
