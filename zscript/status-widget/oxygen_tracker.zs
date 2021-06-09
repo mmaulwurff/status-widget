@@ -32,7 +32,7 @@ class sw_OxygenTracker : sw_Tracker
 
     PlayerInfo player = players[consolePlayer];
     int oldValue  = savedStatus.at(KEY).toInt();
-    int airSupply = (player.air_finished - Level.maptime) / 35;
+    int airSupply = (player.air_finished - Level.mapTime) / 35;
 
     if (oldValue == airSupply) return NULL;
 

@@ -61,14 +61,14 @@ class sw_AmmoTracker : sw_Tracker
     // Order ammo by use of weapons in the weapon slots.
     for (int k = 0; k < PlayerPawn.NUM_WEAPON_SLOTS; ++k)
     {
-      int slotsize = player.weapons.slotSize(k);
-      for (int j = 0; j < slotsize; ++j)
+      int slotSize = player.weapons.slotSize(k);
+      for (int j = 0; j < slotSize; ++j)
       {
         let weap = player.weapons.getWeapon(k, j);
         if (weap == NULL) continue;
-        let weapondef = getDefaultByType(weap);
-        addAmmoFromWeapon(weapondef.ammoType1);
-        addAmmoFromWeapon(weapondef.ammoType2);
+        let weaponDefault = getDefaultByType(weap);
+        addAmmoFromWeapon(weaponDefault.ammoType1);
+        addAmmoFromWeapon(weaponDefault.ammoType2);
       }
     }
 
@@ -91,11 +91,11 @@ class sw_AmmoTracker : sw_Tracker
 
     sw_Messages result = NULL;
 
-    uint ammosNumber = mAmmos.size();
+    uint ammoClassesNumber = mAmmoClasses.size();
     let player = players[consolePlayer].mo;
-    for (uint i = 0; i < ammosNumber; ++i)
+    for (uint i = 0; i < ammoClassesNumber; ++i)
     {
-      string ammo = mAmmos[i];
+      string ammo = mAmmoClasses[i];
       int oldValue = savedStatus.at(ammo).toInt();
       let inv      = Inventory(player.findInventory(ammo));
 
@@ -122,16 +122,16 @@ class sw_AmmoTracker : sw_Tracker
   {
     if (ammoType == NULL) return;
 
-    let ammodef = GetDefaultByType(ammoType);
-    if (ammodef == NULL || ammodef.bInvBar) return;
+    let ammoDefault = getDefaultByType(ammoType);
+    if (ammoDefault == NULL || ammoDefault.bInvBar) return;
 
     string ammoName = ammoType.getClassName();
-    if (mAmmos.find(ammoName) != mAmmos.size()) return;
+    if (mAmmoClasses.find(ammoName) != mAmmoClasses.size()) return;
 
-    mAmmos.push(ammoName);
+    mAmmoClasses.push(ammoName);
   }
 
-  private Array<string> mAmmos;
+  private Array<string> mAmmoClasses;
   private sw_Cvar       mIsEnabled;
 
 } // class sw_AmmoTracker

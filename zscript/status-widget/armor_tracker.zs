@@ -78,10 +78,10 @@ class sw_ArmorTracker : sw_Tracker
   {
     double add = 0;
 
-    let harmor = HexenArmor(player.findInventory("HexenArmor"));
-    if (harmor != NULL)
+    let hArmor = HexenArmor(player.findInventory("HexenArmor"));
+    if (hArmor != NULL)
     {
-      add = harmor.Slots[0] + harmor.Slots[1] + harmor.Slots[2] + harmor.Slots[3] + harmor.Slots[4];
+      add = hArmor.Slots[0] + hArmor.Slots[1] + hArmor.Slots[2] + hArmor.Slots[3] + hArmor.Slots[4];
       if (add == 0) return -1;
     }
 

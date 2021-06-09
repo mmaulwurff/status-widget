@@ -9,7 +9,7 @@ This mod is a part of [m8f's toolbox](https://mmaulwurff.github.io/pages/toolbox
 
 ## Features
 
-- minimalistic UI;
+- plain UI;
 - customizable;
 - lots of things to track - health, ammo, inventory items, armor, weapons, keys,
   oxygen, powerups.
