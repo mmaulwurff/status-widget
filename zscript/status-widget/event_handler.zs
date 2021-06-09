@@ -24,8 +24,8 @@ class sw_EventHandler : EventHandler
   {
     if (players[consolePlayer].mo == NULL) return;
 
-    if (level.time == 1) initialize();
-    else if (level.time > 1) updateQueue();
+    if (level.maptime == 1) initialize();
+    else if (level.maptime > 1) updateQueue();
   }
 
   override
